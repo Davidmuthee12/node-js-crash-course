@@ -3,10 +3,8 @@ import "dotenv/config";
 import fs from "fs/promises";
 import url from "url";
 import path from "path";
-import { error } from "console";
 const PORT = process.env.PORT;
 
-// Get current path
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -19,7 +17,7 @@ const server = http.createServer(async (req, res) => {
       } else if (req.url === "/about") {
         filePath = path.join(__dirname, "public", "about.html");
       } else {
-        throw new error("Method Not Found");
+        throw new Error("Error Locating page");
       }
 
       const data = await fs.readFile(filePath);
@@ -34,5 +32,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Server Listening at PORT: ${PORT}`);
+  console.log(`Server listening at PORT: ${PORT}`);
 });
